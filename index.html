@@ -92,14 +92,28 @@ function checkAcc(){
         return;
     }
 
-    // Thông báo đang kiểm tra
+    // Đang kiểm tra
     result.style.color = "#00ff00";
     result.innerText = "Đang kiểm tra acc " + acc + ", vui lòng đợi 15s...";
 
-    // Sau 15 giây hiện kết quả
     setTimeout(function(){
-        result.style.color = "yellow";
-        result.innerText = "ACC 95% bị back - 5% không bị back";
+
+        // Random kết quả
+        let rand = Math.floor(Math.random() * 3);
+
+        if(rand === 0){
+            result.style.color = "lime";
+            result.innerText = "ACC 95% KHÔNG bị back - 5% bị back (An toàn cao)";
+        } 
+        else if(rand === 1){
+            result.style.color = "yellow";
+            result.innerText = "ACC 70% KHÔNG bị back - 30% bị back (Nguy cơ trung bình)";
+        } 
+        else{
+            result.style.color = "red";
+            result.innerText = "ACC 40% KHÔNG bị back - 60% bị back (Nguy cơ cao)";
+        }
+
     }, 15000);
 }
 </script>
