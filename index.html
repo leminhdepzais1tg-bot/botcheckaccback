@@ -66,6 +66,25 @@ button:hover{
     font-weight:bold;
     font-size:16px;
 }
+
+/* Nút liên hệ ADM */
+.contact-btn{
+    position:fixed;
+    bottom:15px;
+    right:15px;
+    background:#00ffff;
+    color:#000;
+    padding:12px 16px;
+    border-radius:30px;
+    font-weight:bold;
+    text-decoration:none;
+    box-shadow:0 0 15px #00ffff;
+    z-index:999;
+}
+
+.contact-btn:hover{
+    background:#00cccc;
+}
 </style>
 </head>
 
@@ -81,6 +100,13 @@ button:hover{
     <div id="result"></div>
 </div>
 
+<!-- Nút liên hệ ADM -->
+<a class="contact-btn"
+   href="https://www.facebook.com/share/1Mc4ZEGDU6/"
+   target="_blank">
+   Liên hệ hỗ trợ ADM
+</a>
+
 <script>
 function checkAcc(){
     let acc = document.getElementById("acc").value;
@@ -92,28 +118,22 @@ function checkAcc(){
         return;
     }
 
-    // Đang kiểm tra
     result.style.color = "#00ff00";
     result.innerText = "Đang kiểm tra acc " + acc + ", vui lòng đợi 15s...";
 
     setTimeout(function(){
-
-        // Random kết quả
         let rand = Math.floor(Math.random() * 3);
 
         if(rand === 0){
             result.style.color = "lime";
             result.innerText = "ACC 95% KHÔNG bị back - 5% bị back (An toàn cao)";
-        } 
-        else if(rand === 1){
+        }else if(rand === 1){
             result.style.color = "yellow";
             result.innerText = "ACC 70% KHÔNG bị back - 30% bị back (Nguy cơ trung bình)";
-        } 
-        else{
+        }else{
             result.style.color = "red";
             result.innerText = "ACC 40% KHÔNG bị back - 60% bị back (Nguy cơ cao)";
         }
-
     }, 15000);
 }
 </script>
