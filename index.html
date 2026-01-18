@@ -81,10 +81,6 @@ button:hover{
     box-shadow:0 0 15px #00ffff;
     z-index:999;
 }
-
-.contact-btn:hover{
-    background:#00cccc;
-}
 </style>
 </head>
 
@@ -100,7 +96,6 @@ button:hover{
     <div id="result"></div>
 </div>
 
-<!-- Nút liên hệ ADM -->
 <a class="contact-btn"
    href="https://www.facebook.com/share/1Mc4ZEGDU6/"
    target="_blank">
@@ -108,31 +103,55 @@ button:hover{
 </a>
 
 <script>
-function checkAcc(){
-    let acc = document.getElementById("acc").value;
-    let result = document.getElementById("result");
+// Lưu trạng thái check theo acc
+let accData = {};
 
-    if(acc.trim() === ""){
-        result.style.color = "red";
-        result.innerText = "Vui lòng nhập tên acc!";
+// Danh sách nhiều kết quả
+const results = [
+    {text:"ACC 95% KHÔNG bị back - 5% bị back (An toàn cao)", color:"lime"},
+    {text:"ACC 85% KHÔNG bị back - 15% bị back (An toàn)", color:"lime"},
+    {text:"ACC 70% KHÔNG bị back - 30% bị back (Nguy cơ trung bình)", color:"yellow"},
+    {text:"ACC 55% KHÔNG bị back - 45% bị back (Cảnh báo)", color:"orange"},
+    {text:"ACC 40% KHÔNG bị back - 60% bị back (Nguy cơ cao)", color:"red"}
+];
+
+function checkAcc(){
+    let acc = document.getElementById("acc").value.trim();
+    let resultBox = document.getElementById("result");
+
+    if(acc === ""){
+        resultBox.style.color = "red";
+        resultBox.innerText = "Vui lòng nhập tên acc!";
         return;
     }
 
-    result.style.color = "#00ff00";
-    result.innerText = "Đang kiểm tra acc " + acc + ", vui lòng đợi 15s...";
+    // Hiện đang kiểm tra
+    resultBox.style.color = "#00ff00";
+    resultBox.innerText = "Đang kiểm tra acc " + acc + ", vui lòng đợi 15s...";
+
+    // Nếu acc chưa tồn tại thì tạo
+    if(!accData[acc]){
+        accData[acc] = {
+            index: Math.floor(Math.random() * results.length),
+            count: 0,
+            limit: Math.floor(Math.random() * 2) + 2 // 2–3 lần
+        };
+    }
 
     setTimeout(function(){
-        let rand = Math.floor(Math.random() * 3);
+        let data = accData[acc];
+        let res = results[data.index];
 
-        if(rand === 0){
-            result.style.color = "lime";
-            result.innerText = "ACC 95% KHÔNG bị back - 5% bị back (An toàn cao)";
-        }else if(rand === 1){
-            result.style.color = "yellow";
-            result.innerText = "ACC 70% KHÔNG bị back - 30% bị back (Nguy cơ trung bình)";
-        }else{
-            result.style.color = "red";
-            result.innerText = "ACC 40% KHÔNG bị back - 60% bị back (Nguy cơ cao)";
+        resultBox.style.color = res.color;
+        resultBox.innerText = res.text;
+
+        data.count++;
+
+        // Nếu đủ 2–3 lần thì đổi kết quả
+        if(data.count >= data.limit){
+            data.index = Math.floor(Math.random() * results.length);
+            data.count = 0;
+            data.limit = Math.floor(Math.random() * 2) + 2;
         }
     }, 15000);
 }
